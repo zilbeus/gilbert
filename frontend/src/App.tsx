@@ -22,8 +22,8 @@ function App() {
 
     return (
         <div id="App">
-            <div id="input" className="input-box">
-                <input id="name" className="input" onChange={search} autoComplete="off" name="input" type="text"/>
+            <div id="input">
+                <input id="name" onChange={search} autoComplete="off" name="input" type="text"/>
                 <ul>{listItems}</ul>
             </div>
         </div>
