@@ -21,5 +21,8 @@ func (a *App) startup(ctx context.Context) {
 }
 
 func (a *App) FindApplications(input string) []string {
+	if len(input) == 0 {
+		return []string{}
+	}
 	return []string{"This", "Is", "An", "Example", "List"}
 }
