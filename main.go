@@ -31,7 +31,8 @@ func main() {
 		Linux: &linux.Options{
 			WindowIsTranslucent: true,
 		},
-		OnStartup: app.startup,
+		OnStartup:  app.startup,
+		OnDomReady: app.domReady,
 		Bind: []interface{}{
 			app,
 		},
