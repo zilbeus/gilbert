@@ -13,6 +13,10 @@ interface ResultsBoxProps {
     items: JSX.Element[];
 }
 
+interface ResultItemProps {
+    item: string;
+}
+
 function App() {
     const [input, setInput] = useState('');
     const [applications, setApplications] = useState<string[]>([]);
@@ -24,7 +28,7 @@ function App() {
         FindApplications(input).then((result) => {
             console.log(result);
             setApplications(result);
-            const items = result.map(i => <li>{i}</li>);
+            const items = result.map(i => <ResultItem item={i}/>);
             setListItems(items);
         });
     }
@@ -53,6 +57,17 @@ function App() {
             <ul className="bg-neutral-800 text-neutral-400">{props.items}</ul>
         );
 
+    }
+
+    const ResultItem = (props: ResultItemProps) => {
+        return (
+            <li 
+                className="hover:bg-neutral-700" 
+                onClick={() => console.log("Clicked: ", props.item)}
+            >
+                {props.item}
+            </li>
+        );
     }
 
     return (
