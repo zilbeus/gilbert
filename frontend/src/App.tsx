@@ -34,7 +34,7 @@ function App() {
             <input
                 id="name"
                 autoFocus
-                className="w-full bg-neutral-900 text-slate-300 p-4 border-0 focus:outline-none"
+                className="w-full bg-neutral-900 text-neutral-300 p-4 border-0 focus:outline-none"
                 onChange={props.onChange}
                 autoComplete="off"
                 name="input"
@@ -50,7 +50,7 @@ function App() {
         }
 
         return (
-            <ul></ul>
+            <ul className="bg-neutral-800 text-neutral-400">{props.items}</ul>
         );
 
     }
