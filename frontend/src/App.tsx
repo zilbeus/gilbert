@@ -15,6 +15,7 @@ interface ResultsBoxProps {
 
 interface ResultItemProps {
     item: string;
+    id: number;
 }
 
 function App() {
@@ -28,23 +29,25 @@ function App() {
         FindApplications(input).then((result) => {
             console.log(result);
             setApplications(result);
-            const items = result.map(i => <ResultItem item={i}/>);
+            const items = result.map((item, idx) => <ResultItem item={item} id={idx}/>);
             setListItems(items);
         });
     }
 
     const InputBox = (props: InputBoxProps) => {
         return (
-            <input
-                id="name"
-                autoFocus
-                className="w-full bg-neutral-900 text-neutral-300 p-4 border-0 focus:outline-none"
-                onChange={props.onChange}
-                autoComplete="off"
-                name="input"
-                type="text"
-                value={props.value}
-            />
+            <div className="p-3 bg-neutral-900 rounded-t-2xl border-b-2 border-b-neutral-700">
+                <input
+                    id="name"
+                    autoFocus
+                    className="w-full bg-neutral-800 text-neutral-300 p-4 border-2 focus:outline-none border-neutral-700 rounded-2xl"
+                    onChange={props.onChange}
+                    autoComplete="off"
+                    name="input"
+                    type="text"
+                    value={props.value}
+                />
+            </div>
         );
     }
 
@@ -54,7 +57,7 @@ function App() {
         }
 
         return (
-            <ul className="bg-neutral-800 text-neutral-400">{props.items}</ul>
+            <ul className="bg-neutral-950 text-neutral-400 p-4">{props.items}</ul>
         );
 
     }
@@ -62,20 +65,34 @@ function App() {
     const ResultItem = (props: ResultItemProps) => {
         return (
             <li 
-                className="hover:bg-neutral-700" 
+                className="hover:bg-yellow-900 hover:text-amber-500 p-4 rounded-2xl text-neutral-300" 
                 onClick={() => console.log("Clicked: ", props.item)}
             >
-                {props.item}
+                <div className="flex flex-row justify-between">
+                    <div>
+                        {props.item}
+                    </div>
+                    <div className="text-lg text-neutral-500 self-center">
+                        Alt + {props.id + 1}
+                    </div>
+                </div>
             </li>
         );
     }
 
-    return (
-        <div id="App" className="text-4xl">
-            <div id="input" className="border-4 border-neutral-800">
-                <InputBox value={input} onChange={search}/>
-                <ResultsBox items={listItems}/>
+    const Footer = () => {
+        return (
+            <div className="p-1 w-full bg-neutral-900 text-neutral-300 rounded-b-2xl text-lg text-neutral-600 border-t-2 border-neutral-700 text-center">
+                UP/DOWN to navigate, RET to select, ESC to dismiss
             </div>
+        )
+    }
+
+    return (
+        <div id="App" className="text-4xl border-2 border-neutral-700 rounded-2xl">
+            <InputBox value={input} onChange={search} />
+            <ResultsBox items={listItems}/>
+            <Footer />
         </div>
     )
 }
