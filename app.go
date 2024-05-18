@@ -30,5 +30,5 @@ func (a *App) FindApplications(input string) []string {
 	if len(input) == 0 {
 		return []string{}
 	}
-	return []string{"This", "Is", "An", "Example", "List"}
+	return []string{"Gnome Terminal", "Example application #1", "Example application #2", "Example application #3", "Example application #4"}
 }

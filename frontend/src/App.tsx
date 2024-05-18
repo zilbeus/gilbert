@@ -78,7 +78,7 @@ function App() {
   const ResultItem = (props: ResultItemProps) => {
     return (
       <li
-        className="hover:bg-highlight-bg p-4 rounded-2xl hover:text-highlight-fg hover:text-highlight-fg text-neutral-300"
+        className="hover:bg-highlight-bg px-4 py-6 rounded-2xl hover:text-highlight-fg hover:text-highlight-fg text-neutral-300 text-3xl"
         onClick={() => console.log("Clicked: ", props.item)}
       >
         <div className="flex flex-row justify-between">
