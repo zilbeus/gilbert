@@ -71,20 +71,18 @@ function App() {
     }
 
     return (
-      <ul className="bg-neutral-950 text-neutral-400 p-4">{props.items}</ul>
+      <ul className="bg-result-list-bg text-neutral-400 p-4">{props.items}</ul>
     );
   };
 
   const ResultItem = (props: ResultItemProps) => {
     return (
       <li
-        className="hover:bg-yellow-900 p-4 rounded-2xl"
+        className="hover:bg-highlight-bg p-4 rounded-2xl hover:text-highlight-fg hover:text-highlight-fg text-neutral-300"
         onClick={() => console.log("Clicked: ", props.item)}
       >
         <div className="flex flex-row justify-between">
-          <div className="hover:text-amber-500 text-neutral-300">
-            {props.item}
-          </div>
+          <div>{props.item}</div>
           <ResultSelectionKeyCombination idx={props.id + 1} />
         </div>
       </li>
@@ -113,7 +111,7 @@ function App() {
 
   const KbKeyIcon = (props: KeyProps) => {
     return (
-      <div className="bg-neutral-800 rounded-lg border border-neutral-700 text-neutral-400 drop-shadow-lg">
+      <div className="bg-neutral-800 rounded-lg border border-neutral-700 text-neutral-400 drop-shadow-lg w-9 h-9">
         <div className="py-2 px-2">{props.child}</div>
       </div>
     );
@@ -144,7 +142,7 @@ function App() {
       <div className="flex justify-center items-center text-neutral-400 text-sm gap-x-2">
         <AltKeyIcon />
         <div className="text-lg">+</div>
-        <KbKeyIcon child={<div className="px-1">{idx}</div>} />
+        <KbKeyIcon child={<div className="text-center">{idx}</div>} />
       </div>
     );
   };
