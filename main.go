@@ -20,7 +20,7 @@ func main() {
 	err := wails.Run(&options.App{
 		Title:         "gilbert",
 		Width:         1024,
-		Height:        550,
+		Height:        600,
 		AlwaysOnTop:   true,
 		Frameless:     true,
 		DisableResize: true,

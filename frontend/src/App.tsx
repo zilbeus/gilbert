@@ -2,6 +2,13 @@ import { useState, useEffect } from "react";
 import logo from "./assets/images/logo-universal.png";
 import "./App.css";
 import { FindApplications } from "../wailsjs/go/main/App";
+import {
+  ArrowUp,
+  ArrowDown,
+  CornerDownLeft,
+  CircleArrowOutUpLeft,
+  Option,
+} from "lucide-react";
 
 interface InputBoxProps {
   value: string;
@@ -71,14 +78,14 @@ function App() {
   const ResultItem = (props: ResultItemProps) => {
     return (
       <li
-        className="hover:bg-yellow-900 hover:text-amber-500 p-4 rounded-2xl text-neutral-300"
+        className="hover:bg-yellow-900 p-4 rounded-2xl"
         onClick={() => console.log("Clicked: ", props.item)}
       >
         <div className="flex flex-row justify-between">
-          <div>{props.item}</div>
-          <div className="text-lg text-neutral-500 self-center">
-            Alt + {props.id + 1}
+          <div className="hover:text-amber-500 text-neutral-300">
+            {props.item}
           </div>
+          <ResultSelectionKeyCombination idx={props.id + 1} />
         </div>
       </li>
     );
@@ -86,8 +93,58 @@ function App() {
 
   const Footer = () => {
     return (
-      <div className="p-1 w-full bg-neutral-900 text-neutral-300 rounded-b-2xl text-lg text-neutral-600 border-t-2 border-neutral-700 text-center">
-        UP/DOWN to navigate, RET to select, ESC to dismiss
+      <div className="p-1 w-full bg-neutral-900 rounded-b-2xl text-lg text-neutral-600 border-t-2 border-neutral-700 text-center">
+        <div className="flex justify-center items-center py-1 gap-x-3">
+          <UpKeyIcon />
+          <DownKeyIcon />
+          {"to navigate, "}
+          <ReturnKeyIcon />
+          {"to select, "}
+          <EscapeKeyIcon />
+          {"to dismiss"}
+        </div>
+      </div>
+    );
+  };
+
+  interface KeyProps {
+    child: JSX.Element;
+  }
+
+  const KbKeyIcon = (props: KeyProps) => {
+    return (
+      <div className="bg-neutral-800 rounded-lg border border-neutral-700 text-neutral-400 drop-shadow-lg">
+        <div className="py-2 px-2">{props.child}</div>
+      </div>
+    );
+  };
+
+  const UpKeyIcon = () => {
+    return <KbKeyIcon child={<ArrowUp size={18} />} />;
+  };
+
+  const DownKeyIcon = () => {
+    return <KbKeyIcon child={<ArrowDown size={18} />} />;
+  };
+
+  const ReturnKeyIcon = () => {
+    return <KbKeyIcon child={<CornerDownLeft size={18} />} />;
+  };
+
+  const EscapeKeyIcon = () => {
+    return <KbKeyIcon child={<CircleArrowOutUpLeft size={18} />} />;
+  };
+
+  const AltKeyIcon = () => {
+    return <KbKeyIcon child={<Option size={18} />} />;
+  };
+
+  const ResultSelectionKeyCombination = ({ idx }: { idx: number }) => {
+    return (
+      <div className="flex justify-center items-center text-neutral-400 text-sm gap-x-2">
+        <AltKeyIcon />
+        <div className="text-lg">+</div>
+        <KbKeyIcon child={<div className="px-1">{idx}</div>} />
       </div>
     );
   };
