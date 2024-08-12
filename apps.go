@@ -19,6 +19,22 @@ var appFileExtension string = ".desktop"
 
 var apps []Application
 
+func FindApps(input string) []Application {
+	foundApps := []Application{}
+
+	if apps == nil || len(apps) == 0 {
+		return foundApps
+	}
+
+	for _, app := range apps {
+		if app.name != nil && strings.Contains(app.name, input) {
+			foundApps = append(foundApps, app)
+		}
+	}
+
+	return foundApps
+}
+
 func Init() {
 	paths := getAppPaths()
 	apps = getApplications(paths)
