@@ -28,8 +28,19 @@ func (a *App) domReady(ctx context.Context) {
 }
 
 func (a *App) FindApplications(input string) []string {
+	foundAppNames := []string{}
 	if len(input) == 0 {
-		return []string{}
+		return foundAppNames
 	}
-	return []string{"Gnome Terminal", "Example application #1", "Example application #2", "Example application #3", "Example application #4"}
+
+	foundApps := FindApps(input)
+	if len(foundApps) == 0 {
+		return foundAppNames
+	}
+
+	for _, app := range foundApps {
+		foundAppNames = append(foundAppNames, app.name)
+	}
+
+	return foundAppNames
 }

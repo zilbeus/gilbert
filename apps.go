@@ -27,7 +27,7 @@ func FindApps(input string) []Application {
 	}
 
 	for _, app := range apps {
-		if app.name != nil && strings.Contains(app.name, input) {
+		if strings.Contains(app.name, input) {
 			foundApps = append(foundApps, app)
 		}
 	}
