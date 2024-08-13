@@ -27,20 +27,10 @@ func (a *App) domReady(ctx context.Context) {
 	runtime.WindowCenter(a.ctx)
 }
 
-func (a *App) FindApplications(input string) []string {
-	foundAppNames := []string{}
+func (a *App) FindApplications(input string) []Application {
 	if len(input) == 0 {
-		return foundAppNames
+		return []Application{}
 	}
 
-	foundApps := FindApps(input)
-	if len(foundApps) == 0 {
-		return foundAppNames
-	}
-
-	for _, app := range foundApps {
-		foundAppNames = append(foundAppNames, app.name)
-	}
-
-	return foundAppNames
+	return FindApps(input)
 }

@@ -24,9 +24,15 @@ interface ResultItemProps {
   id: number;
 }
 
+interface Application {
+  name: string;
+  path: string;
+  exec: string;
+}
+
 function App() {
   const [input, setInput] = useState("");
-  const [applications, setApplications] = useState<string[]>([]);
+  const [applications, setApplications] = useState<Application[]>([]);
   const [listItems, setListItems] = useState<JSX.Element[]>([]);
 
   const search = (e: any) => {
@@ -35,8 +41,8 @@ function App() {
     FindApplications(input).then((result) => {
       console.log(result);
       setApplications(result);
-      const items = result.map((item, idx) => (
-        <ResultItem item={item} id={idx} />
+      const items = result.map((item: Application, idx) => (
+        <ResultItem item={item.name} id={idx} />
       ));
       setListItems(items);
     });

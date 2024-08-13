@@ -9,9 +9,9 @@ import (
 )
 
 type Application struct {
-	name string
-	path string
-	exec string
+	Name string `json:"name"`
+	Path string `json:"path"`
+	Exec string `json:"exec"`
 }
 
 var desktopFileDirs []string = []string{"/home/zilq/.local/share/applications", "/usr/share/applications"}
@@ -27,9 +27,14 @@ func FindApps(input string) []Application {
 	}
 
 	for _, app := range apps {
-		if strings.Contains(app.name, input) {
+		if strings.Contains(app.Name, input) {
 			foundApps = append(foundApps, app)
 		}
+	}
+
+	fmt.Printf("Found %d apps\n", len(foundApps))
+	if len(foundApps) > 0 {
+		fmt.Printf("First app name: %s\n", foundApps[0].Name)
 	}
 
 	return foundApps
@@ -77,7 +82,7 @@ func getApplications(paths []string) []Application {
 }
 
 func getApplicationData(path string, data []byte) Application {
-	app := Application{path: path}
+	app := Application{Path: path}
 
 	lines := strings.Split(string(data), "\n")
 	for _, line := range lines {
@@ -88,11 +93,11 @@ func getApplicationData(path string, data []byte) Application {
 		keyVal := strings.Split(line, "=")
 
 		if keyVal[0] == "Exec" {
-			app.exec = keyVal[1]
+			app.Exec = keyVal[1]
 		}
 
 		if keyVal[0] == "Name" {
-			app.name = keyVal[1]
+			app.Name = keyVal[1]
 		}
 	}
 
