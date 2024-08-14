@@ -34,13 +34,25 @@ function App() {
   const [input, setInput] = useState("");
   const [applications, setApplications] = useState<Application[]>([]);
   const [listItems, setListItems] = useState<JSX.Element[]>([]);
+  const [selectedItem, setSelectedItem] = useState<number | undefined>(
+    undefined,
+  );
+
+  useEffect(() => {
+    const items = applications.map((item: Application, idx) => (
+      <ResultItem item={item.name} id={idx} />
+    ));
+    setListItems(items);
+  }, [selectedItem]);
 
   const search = (e: any) => {
     const input = e.target.value;
     setInput(input);
     FindApplications(input).then((result) => {
-      console.log(result);
       setApplications(result);
+      if (result.length > 0) {
+        setSelectedItem(1);
+      }
       const items = result.map((item: Application, idx) => (
         <ResultItem item={item.name} id={idx} />
       ));
@@ -66,9 +78,17 @@ function App() {
           name="input"
           type="text"
           value={props.value}
+          onKeyDown={handleInputBoxKeyInput}
         />
       </div>
     );
+  };
+
+  const handleInputBoxKeyInput = (event: any) => {
+    if (event.key == "ArrowDown" || event.key == "ArrowUp") {
+      handleSelectedItemChange(event);
+      return false;
+    }
   };
 
   const ResultsBox = (props: ResultsBoxProps) => {
@@ -77,14 +97,43 @@ function App() {
     }
 
     return (
-      <ul className="bg-result-list-bg text-neutral-400 p-4">{props.items}</ul>
+      <div>
+        <ul className="bg-result-list-bg text-neutral-400 p-4">
+          {props.items}
+        </ul>
+      </div>
     );
+  };
+
+  const handleSelectedItemChange = (event: any) => {
+    let newSelectedItem = selectedItem;
+    if (event.key == "ArrowDown") {
+      if (selectedItem === undefined || selectedItem === listItems.length - 1) {
+        newSelectedItem = 0;
+      } else {
+        newSelectedItem = selectedItem + 1;
+      }
+    }
+    if (event.key == "ArrowUp") {
+      if (selectedItem === undefined || selectedItem <= 0) {
+        newSelectedItem = listItems.length - 1;
+      } else {
+        newSelectedItem = selectedItem - 1;
+      }
+    }
+    setSelectedItem(newSelectedItem);
+    event.preventDefault();
   };
 
   const ResultItem = (props: ResultItemProps) => {
     return (
       <li
-        className="hover:bg-highlight-bg px-4 py-6 rounded-2xl hover:text-highlight-fg hover:text-highlight-fg text-neutral-300 text-3xl"
+        onMouseEnter={() => setSelectedItem(props.id)}
+        className={
+          props.id === selectedItem
+            ? "bg-highlight-bg px-4 py-6 rounded-2xl text-highlight-fg text-neutral-300 text-3xl"
+            : "px-4 py-6 rounded-2xl text-neutral-300 text-3xl"
+        }
         onClick={() => console.log("Clicked: ", props.item)}
       >
         <div className="flex flex-row justify-between">
