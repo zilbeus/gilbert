@@ -27,8 +27,9 @@ func FindApps(input string) []Application {
 		return foundApps
 	}
 
+	inputAllCaps := strings.ToUpper(input)
 	for _, app := range apps {
-		if strings.Contains(app.Name, input) {
+		if strings.Contains(strings.ToUpper(app.Name), inputAllCaps) {
 			foundApps = append(foundApps, app)
 		}
 	}
