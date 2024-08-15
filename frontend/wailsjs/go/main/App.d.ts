@@ -3,3 +3,5 @@
 import {main} from '../models';
 
 export function FindApplications(arg1:string):Promise<Array<main.Application>>;
+
+export function RunApplication(arg1:string):Promise<void>;

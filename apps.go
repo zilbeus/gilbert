@@ -5,6 +5,7 @@ import (
 	"io/fs"
 	"log"
 	"os"
+	"os/exec"
 	"strings"
 )
 
@@ -38,6 +39,30 @@ func FindApps(input string) []Application {
 	}
 
 	return foundApps
+}
+
+func RunApplication(appName string) {
+	if apps == nil || len(apps) == 0 {
+		return
+	}
+
+	idx := -1
+	for i, a := range apps {
+		if a.Name == appName {
+			idx = i
+			break
+		}
+	}
+
+	if idx > -1 {
+		app := apps[idx]
+		fmt.Printf("Found app - name: %s, exec: %s\n", app.Name, app.Exec)
+		cmd := exec.Command(app.Exec)
+		err := cmd.Run()
+		if err != nil {
+			log.Println(err)
+		}
+	}
 }
 
 func Init() {

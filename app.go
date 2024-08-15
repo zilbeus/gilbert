@@ -34,3 +34,7 @@ func (a *App) FindApplications(input string) []Application {
 
 	return FindApps(input)
 }
+
+func (a *App) RunApplication(appName string) {
+	RunApplication(appName)
+}

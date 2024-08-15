@@ -5,3 +5,7 @@
 export function FindApplications(arg1) {
   return window['go']['main']['App']['FindApplications'](arg1);
 }
+
+export function RunApplication(arg1) {
+  return window['go']['main']['App']['RunApplication'](arg1);
+}

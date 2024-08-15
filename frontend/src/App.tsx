@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import logo from "./assets/images/logo-universal.png";
 import "./App.css";
-import { FindApplications } from "../wailsjs/go/main/App";
+import { FindApplications, RunApplication } from "../wailsjs/go/main/App";
 import {
   ArrowUp,
   ArrowDown,
@@ -50,9 +50,7 @@ function App() {
     setInput(input);
     FindApplications(input).then((result) => {
       setApplications(result);
-      if (result.length > 0) {
-        setSelectedItem(1);
-      }
+      setSelectedItem(result.length > 0 ? 0 : undefined);
       const items = result.map((item: Application, idx) => (
         <ResultItem item={item.name} id={idx} />
       ));
@@ -87,7 +85,15 @@ function App() {
   const handleInputBoxKeyInput = (event: any) => {
     if (event.key == "ArrowDown" || event.key == "ArrowUp") {
       handleSelectedItemChange(event);
-      return false;
+      return;
+    }
+    if (event.key == "Enter") {
+      if (selectedItem !== undefined) {
+        console.log(
+          "selected item on enter: " + applications[selectedItem].name,
+        );
+        RunApplication(applications[selectedItem].name);
+      }
     }
   };
 
